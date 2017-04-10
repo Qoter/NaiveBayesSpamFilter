@@ -1,6 +1,6 @@
 ## Naive Bayes spam filter
 
-### How run?
+### How to run?
 ```
 $ NaiveBayesSpamFilter.exe -h <hamDirectory> -s <spamDirectory> -u <unknownDirectory>
 ```
