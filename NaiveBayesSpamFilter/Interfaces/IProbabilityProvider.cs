@@ -1,13 +1,13 @@
+using NaiveBayesSpamFilter.SpamFilter;
+
 namespace NaiveBayesSpamFilter.Interfaces
 {
     public interface IProbabilityProvider
     {
-        //double GetConditionalProbabilityOf(string word, MsgClass givenMsgClass);
-        //double GetConditionalProbabilityOf(MsgClass msgClass, string givenWord);
-        //double GetProbabilityOf(MsgClass msgClass);
-
-        double GetProbabilityWordGivenSpam(string word);
-        double GetProbabilityWordGivenHam(string word);
-        bool Contains(string word);
+        double GetProbabilityOf(string word, MsgClass givenMsgClass);
+        double GetProbabilityOf(MsgClass msgClass, string givenWord);
+        double GetProbabilityOf(MsgClass msgClass);
+        double GetProbabilityOf(string word);
+        bool HasProbability(string word);
     }
 }

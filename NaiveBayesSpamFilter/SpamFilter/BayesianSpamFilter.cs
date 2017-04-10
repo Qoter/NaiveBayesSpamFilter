@@ -7,6 +7,7 @@ namespace NaiveBayesSpamFilter.SpamFilter
 {
     public class BayesianSpamFilter
     {
+        private const double SpamBottomBound = 0.5;
         private readonly IProbabilityProvider probabilityProvider;
         private readonly IWordsExtractor wordsExtractor;
         private readonly IWordsPreprocessor wordsPreprocessor;
@@ -24,13 +25,18 @@ namespace NaiveBayesSpamFilter.SpamFilter
             var preprocessedWords = wordsPreprocessor.PreprocessWords(rawWords);
 
             var expDegree = preprocessedWords
-                .Where(w => probabilityProvider.Contains(w))
-                .Select(word => probabilityProvider.GetProbabilitySpamGivenWord(word))
-                .Sum(p => Math.Log(1 - p) - Math.Log(p));
+                .Where(probabilityProvider.HasProbability)
+                .Select(word => probabilityProvider.GetProbabilityOf(MsgClass.Spam, word))
+                .Sum(spamGivenWordPr => Math.Log(1 - spamGivenWordPr) - Math.Log(spamGivenWordPr));
 
-            var probabilityOfSpamGivenWordsFromMessage = 1/(Math.Exp(expDegree) + 1);
+            var spamGivenAllWordsProbability = 1/(Math.Exp(expDegree) + 1);
 
-            return probabilityOfSpamGivenWordsFromMessage;
+            return spamGivenAllWordsProbability;
+        }
+
+        public bool IsSpam(Stream mimeMessageStream)
+        {
+            return GetProbabilityOfSpam(mimeMessageStream) > SpamBottomBound;
         }
     }
 }

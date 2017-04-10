@@ -8,9 +8,6 @@ namespace NaiveBayesSpamFilter.SpamFilter
 {
     public class ProbabilityProvider : IProbabilityProvider
     {
-        public const double ProbabilityOfSpamMessage = 0.5;
-        public const double ProbabilityOfHamMessage = 1 - ProbabilityOfSpamMessage;
-
         private readonly Dictionary<string, int> spamCountWithWord;
         private readonly Dictionary<string, int> hamCountWithWord;
         private readonly int totalSpamCount;
@@ -23,26 +20,38 @@ namespace NaiveBayesSpamFilter.SpamFilter
 
             hamCountWithWord = CalculateWordsCount(trainingSample.HamFiles, wordsExtractor, wordsPreprocessor);
             totalHamCount = trainingSample.HamFiles.Count();
-
         }
 
-        public double GetProbabilityWordGivenSpam(string word)
+        public double GetProbabilityOf(string word, MsgClass givenMsgClass)
         {
-            if (!Contains(word))
+            if (!HasProbability(word))
                 throw new ArgumentException("Word not found");
 
-            return spamCountWithWord[word]/(double) totalHamCount;
+            return givenMsgClass == MsgClass.Spam
+                ? spamCountWithWord[word]/(double) totalSpamCount
+                : hamCountWithWord[word]/(double) totalHamCount;
         }
 
-        public double GetProbabilityWordGivenHam(string word)
+        public double GetProbabilityOf(MsgClass msgClass, string givenWord)
         {
-            if (!Contains(word))
+            if (!HasProbability(givenWord))
                 throw new ArgumentException("Word not found");
 
-            return hamCountWithWord[word]/(double) totalSpamCount;
+            return GetProbabilityOf(givenWord, msgClass)*GetProbabilityOf(msgClass)/GetProbabilityOf(givenWord);
         }
 
-        public bool Contains(string word)
+        public double GetProbabilityOf(MsgClass msgClass)
+        {
+            return msgClass == MsgClass.Spam ? 0.47 : 1 - 0.47;
+        }
+
+        public double GetProbabilityOf(string word)
+        {
+            return GetProbabilityOf(word, MsgClass.Spam)*GetProbabilityOf(MsgClass.Spam) +
+                   GetProbabilityOf(word, MsgClass.Ham)*GetProbabilityOf(MsgClass.Ham);
+        }
+
+        public bool HasProbability(string word)
         {
             return spamCountWithWord.ContainsKey(word) &&
                    hamCountWithWord.ContainsKey(word);

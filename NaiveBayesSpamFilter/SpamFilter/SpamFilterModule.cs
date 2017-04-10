@@ -7,7 +7,7 @@ namespace NaiveBayesSpamFilter.SpamFilter
     {
         public override void Load()
         {
-            Bind<IPathProvider>().To<ConstantPathProvider>();
+            Bind<IWorkspace>().To<ConstantWorkspace>();
             Bind<ITrainingSample>().To<FoldersTrainigSample>();
             Bind<IProbabilityProvider>().To<ProbabilityProvider>();
             Bind<IWordsExtractor>().To<WordsExtractor>();

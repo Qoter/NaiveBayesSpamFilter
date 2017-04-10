@@ -1,4 +1,4 @@
-namespace NaiveBayesSpamFilter.Interfaces
+namespace NaiveBayesSpamFilter.SpamFilter
 {
     public enum MsgClass
     {

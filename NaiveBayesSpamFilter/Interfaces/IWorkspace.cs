@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace NaiveBayesSpamFilter.Interfaces
 {
-    public interface IPathProvider
+    public interface IWorkspace
     {
         DirectoryInfo HamOnlyDirectory { get; }
         DirectoryInfo SpamOnlyDirectory { get; }

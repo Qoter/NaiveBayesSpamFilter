@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy, Version=2.3.1.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.2.3.1\lib\net40\FakeItEasy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MimeKitLite, Version=1.14.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
       <HintPath>..\packages\MimeKitLite.1.14.0\lib\net451\MimeKitLite.dll</HintPath>
       <Private>True</Private>
@@ -62,14 +66,12 @@
   <ItemGroup>
     <Compile Include="Checks\CrossCheck.cs" />
     <Compile Include="Infrastructure\RegexExtensions.cs" />
-    <Compile Include="Interfaces\IPathProvider.cs" />
+    <Compile Include="Interfaces\IWorkspace.cs" />
     <Compile Include="Interfaces\ITrainingSample.cs" />
-    <Compile Include="Interfaces\MsgClass.cs" />
     <Compile Include="SpamFilter\BayesianSpamFilter.cs" />
-    <Compile Include="SpamFilter\ConstantPathProvider.cs" />
-    <Compile Include="SpamFilter\CustomTrainingSample.cs" />
+    <Compile Include="SpamFilter\ConstantWorkspace.cs" />
+    <Compile Include="SpamFilter\MsgClass.cs" />
     <Compile Include="SpamFilter\ProbabilityProvider.cs" />
-    <Compile Include="SpamFilter\ProbabilityProviderExtensions.cs" />
     <Compile Include="SpamFilter\SpamFilterModule.cs" />
     <Compile Include="SpamFilter\WordsExtractor.cs" />
     <Compile Include="SpamFilter\WordsPreprocessor.cs" />
