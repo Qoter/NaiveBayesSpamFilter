@@ -18,15 +18,27 @@ namespace NaiveBayesSpamFilter.Checks
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
         }
+
         [Test]
-        public void FindBestSpamWords()
+        public void FindMostSignificantWords()
         {
             var kernel = new StandardKernel(new SpamFilterModule());
             var probabilityProvider = kernel.Get<IProbabilityProvider>();
 
-            foreach (var word in probabilityProvider.UsedWords.OrderByDescending(w => probabilityProvider.GetProbabilityOf(w, MsgClass.Spam) + 1 - probabilityProvider.GetProbabilityOf(w, MsgClass.Ham)))
+            var stats = probabilityProvider.UsedWords
+                .Select(
+                    w =>
+                        new
+                        {
+                            Word = w,
+                            SpamGivenWordPr = probabilityProvider.GetProbabilityOf(MsgClass.Spam, w),
+                            HamGivenWordPr = probabilityProvider.GetProbabilityOf(MsgClass.Ham, w)
+                        })
+                .OrderByDescending(x => Math.Max(x.SpamGivenWordPr/x.HamGivenWordPr, x.HamGivenWordPr/x.SpamGivenWordPr));
+
+            foreach (var stat in stats)
             {
-                Console.WriteLine($"{word} {probabilityProvider.GetProbabilityOf(word, MsgClass.Spam):0.0000} {probabilityProvider.GetProbabilityOf(word, MsgClass.Ham)}");
+                Console.WriteLine($"{stat.Word} {stat.SpamGivenWordPr:0.0000} {stat.HamGivenWordPr:0.0000}");
             }
         }
     }
