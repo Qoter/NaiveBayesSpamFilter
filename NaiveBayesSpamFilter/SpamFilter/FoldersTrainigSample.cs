@@ -6,16 +6,14 @@ namespace NaiveBayesSpamFilter.SpamFilter
 {
     public class FoldersTrainigSample : ITrainingSample
     {
-        public IEnumerable<FileInfo> SpamFiles => spamDirectory.EnumerateFiles();
-        public IEnumerable<FileInfo> HamFiles => hamDirectory.EnumerateFiles();
+        public IEnumerable<FileInfo> SpamFiles => workspace.SpamOnlyDirectory.EnumerateFiles();
+        public IEnumerable<FileInfo> HamFiles => workspace.HamOnlyDirectory.EnumerateFiles();
 
-        private readonly DirectoryInfo spamDirectory;
-        private readonly DirectoryInfo hamDirectory;
+        private readonly IWorkspace workspace;
 
-        public FoldersTrainigSample(string spamDirectory, string hamDirectory)
+        public FoldersTrainigSample(IWorkspace workspace)
         {
-            this.spamDirectory = new DirectoryInfo(spamDirectory);
-            this.hamDirectory = new DirectoryInfo(hamDirectory);
+            this.workspace = workspace;
         }
     }
 }

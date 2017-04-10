@@ -21,11 +21,11 @@ namespace NaiveBayesSpamFilter.Checks
         [Test]
         public void RunCrossCheck()
         {
+            const int partsCount = 4;
             var defaultWorkspace = new ConstantWorkspace();
+
             var spamFiles = defaultWorkspace.SpamOnlyDirectory.EnumerateFiles().ToArray();
             var hamFiles = defaultWorkspace.HamOnlyDirectory.EnumerateFiles().ToArray();
-
-            const int partsCount = 4;
 
             var spams = Patition(spamFiles, partsCount).ToArray();
             var hams = Patition(hamFiles, partsCount).ToArray();

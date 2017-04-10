@@ -5,9 +5,16 @@ namespace NaiveBayesSpamFilter.SpamFilter
 {
     public class SpamFilterModule : NinjectModule
     {
+        private readonly IWorkspace workspace;
+
+        public SpamFilterModule(IWorkspace workspace=null)
+        {
+            this.workspace = workspace ?? new ConstantWorkspace();
+        }
+
         public override void Load()
         {
-            Bind<IWorkspace>().To<ConstantWorkspace>();
+            Bind<IWorkspace>().ToConstant(workspace);
             Bind<ITrainingSample>().To<FoldersTrainigSample>();
             Bind<IProbabilityProvider>().To<ProbabilityProvider>();
             Bind<IWordsExtractor>().To<WordsExtractor>();

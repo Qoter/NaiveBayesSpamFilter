@@ -6,14 +6,9 @@ namespace NaiveBayesSpamFilter.SpamFilter
 {
     public class WordsPreprocessor : IWordsPreprocessor
     {
-        public WordsPreprocessor()
-        {
-        }
-
         public IEnumerable<string> PreprocessWords(IEnumerable<string> words)
         {
-            return words
-                .Select(w => w.ToLower());
+            return words.Select(w => w.ToLower());
         }
     }
 }
