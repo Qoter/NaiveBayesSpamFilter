@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checks\BestProperty.cs" />
     <Compile Include="Checks\CrossCheck.cs" />
     <Compile Include="Infrastructure\RegexExtensions.cs" />
     <Compile Include="Interfaces\IWorkspace.cs" />
@@ -81,7 +82,7 @@
     <Compile Include="Interfaces\IWordsPreprocessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpamFilter\FoldersTrainigSample.cs" />
+    <Compile Include="SpamFilter\WorksapaceTrainigSample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

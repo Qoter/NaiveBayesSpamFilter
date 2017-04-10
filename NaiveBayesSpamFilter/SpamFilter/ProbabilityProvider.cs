@@ -57,6 +57,8 @@ namespace NaiveBayesSpamFilter.SpamFilter
                    hamCountWithWord.ContainsKey(word);
         }
 
+        public IEnumerable<string> UsedWords => spamCountWithWord.Keys.Intersect(hamCountWithWord.Keys);
+
         private static Dictionary<string, int> CalculateWordsCount(IEnumerable<FileInfo> msgFiles, IWordsExtractor wordsExtractor, IWordsPreprocessor wordsPreprocessor)
         {
             var wordToCountMessagesWithThisWord = new Dictionary<string, int>();
